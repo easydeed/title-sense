@@ -51,3 +51,9 @@ TitleSense does not emit it; DeedPro does not render it. A phrase that slips one
 **D-011 | 2026-08-04 | Three supersession sub-rules authored TitleSense-side, open to DeedPro amendment.**
 (a) Successors are emitted only for findings whose content actually changed — otherwise one amended prelim fires "review the successor" on everything and officers learn to ignore the notice. (b) `supersession_reason` distinguishes *the world changed* (`amended_source_document`, `re_search`) from *we were wrong* (`producer_correction`). (c) Withdrawal is a supersession whose successor asserts nothing, and never means "this was never true."
 *Affects:* `docs/H1_CONTRACT.md` §3.2.2–§3.2.4
+
+
+**D-012 | 2026-08-04 | TitlePoint documentation stays in the repo; no redistribution concern.**
+The TitlePoint documentation site is publicly accessible, so retaining the captured package in `reference/` and using it internally is settled — it does not need to be raised with TitlePoint and does not gate anything. Owner ruling; owner has the domain knowledge here.
+*What remains open, separately:* QA2-vs-production **parity**, which is a technical accuracy question, not a licensing one. Every method signature, parameter name, and result container in `docs/H1_CONTRACT.md` rests on QA2 pages. It stays on the ToS errand list.
+*Affects:* `reference/README.md`, `ROADMAP.md`

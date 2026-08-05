@@ -1,3 +1,18 @@
+> **PROVENANCE.** Captured from TitlePoint's **QA2** documentation site
+> (`qa2.titlepoint.biz`), which is publicly accessible. Retention and internal
+> use settled per D-012.
+>
+> **Read-only — never edit.** This is a faithful capture, and its value depends
+> on staying one. Fix nothing, update nothing, reformat nothing.
+>
+> **Not checked against production.** QA2-vs-production parity is an open
+> question (`ROADMAP.md`, owner errands). Treat anything here as QA2-accurate
+> until confirmed otherwise.
+>
+> Captured: 53 pages, 116 chunks, 19 methods, 32 service types, 162 parameters.
+
+---
+
 # TitlePoint Title Searching Reference Package
 
 This package was generated from the captured QA2 TitlePoint documentation.

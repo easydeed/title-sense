@@ -1,0 +1,48 @@
+---
+description: How to answer TitlePoint API questions from the captured reference package
+globs:
+alwaysApply: false
+---
+
+# TitlePoint reference — usage rules
+
+The captured TitlePoint documentation lives in `reference/`. It is **read-only**
+third-party material — never edit, reformat, or "update" it.
+
+Three files, same corpus:
+- `titlepoint-title-searching-reference.md` — cleaned full text, 53 pages
+- `titlepoint-title-searching-chunks.jsonl` — 116 semantic chunks with source URL,
+  heading path, methods, service types, parameters
+- `titlepoint-title-searching-inventory.json` — exact lookup: 19 methods,
+  32 service types, 162 parameters
+
+## When answering a TitlePoint question
+
+1. Search the corpus before answering. Never answer a TitlePoint API question
+   from model memory — this project's ground rule is "neither side codes against
+   memory of an API."
+2. Prefer exact matches for method names, service types, parameters, and county
+   names. Use the inventory for exact lookup, the JSONL for semantic search.
+3. **Cite the source filename and URL with every answer.**
+4. Never silently combine conflicting parameter definitions. Surface the conflict.
+5. **Say when the documentation does not answer the question.** This corpus
+   documents request envelopes fully but result payloads only at the container
+   level. Field-level result shapes are unknown and are marked
+   `pending: live_capture` in `docs/H1_CONTRACT.md` §9. Do not infer them.
+6. Treat deprecated methods as deprecated even where other examples still use
+   them. Deprecated: `CreateService`, `CreateService2`, `GetResultByID`,
+   `GetResultByID2`, `GetResultByRequestID`, `GetResultByRequestID2`.
+   Current: `CreateService3` / `CreateService4`, `GetRequestSummaries`,
+   `GetResultByID3`, `GetFilteredResultByID`.
+
+## Two traps worth knowing
+
+- The `Deedchain` / `OpenEncumbrances` filters are parameters on
+  **`GetFilteredResultByID`**, not `GetResultByID3`. Code written against
+  `GetResultByID3` gets results with no filters applied and no error.
+- `DocType.html` (Appendix G) is **quarantined** per D-007e. An initial
+  structural parse drifted; no mapping table is built on it until a real parser
+  exists. Do not use row counts or mappings derived from it.
+
+Contract implications of anything found here belong in `docs/H1_CONTRACT.md`.
+Decisions belong in `DECISIONS.md`. Neither is edited without an owner ruling.

@@ -19,7 +19,7 @@ Do not let the blocked track make the unblocked track feel blocked.
 Nothing on the v2 track moves until both clear. Both are yours; neither can be delegated to a session.
 
 - [ ] **Rotate TitlePoint credentials.** They appeared in old git history and are about to become a production pipeline's foundation. Blocking-adjacent — nothing gets built against the old keys.
-- [ ] **Ask TitlePoint the licensing question** (D-005): *are TitlePoint-derived results licensed for display to non-title-professional end users?* Then the secondary set: QA2-vs-production parity, whether derived/cached storage of results is permitted, per-search vs. per-seat pricing, standing-query allowance.
+- [ ] **Ask TitlePoint the licensing question** (D-005): *are TitlePoint-derived results licensed for display to non-title-professional end users?* Then the secondary set: QA2-vs-production parity, whether derived/cached storage of results is permitted, per-search vs. per-seat pricing, standing-query allowance. Of these, QA2-vs-production parity is the one that touches `reference/` — the captured docs are QA2 and every method signature in H1 rests on them.
 
 ---
 
