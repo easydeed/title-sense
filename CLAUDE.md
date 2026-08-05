@@ -51,6 +51,26 @@ light that can't go red is a decoration.
 
 ---
 
+## Naming
+
+The engine is **TitleSense Core**. The assistant name deployed for Pacific Coast Title is
+a **brand instance** — one client's branding, not the product — and it appears nowhere in
+anything we author: not prose, not plans, not commit messages. It survives only inside
+`reference/titlesense-core/ENGINE_CAPTURE.md` and the TD Hub code, as literal identifiers.
+Use those identifiers when naming a file or symbol; never as the name of the product.
+
+**The line is identifier vs. prose, not file vs. file** (D-017). The name may appear as a
+literal code identifier anywhere — file, symbol, env var, DB column, CSS class — and must
+sit in a code span or fenced block when it does. It may never appear as prose. To check:
+`sed 's/\`[^\`]*\`//g' FILE | grep -in tessa` — strips code spans first; anything left is
+a real violation. (D-014, D-017)
+
+## Review
+
+Before any milestone, and before declaring anything done, run the `self-review` skill.
+Four passes: exposure, truth, structure, uncomfortable questions. A review that concludes
+"looks good" has failed. Nothing ships with an open Exposure or Truth finding. (D-016)
+
 ## Working rules
 
 **Don't create documents.** The repo holds five authored documents on purpose.

@@ -57,3 +57,32 @@ TitleSense does not emit it; DeedPro does not render it. A phrase that slips one
 The TitlePoint documentation site is publicly accessible, so retaining the captured package in `reference/` and using it internally is settled — it does not need to be raised with TitlePoint and does not gate anything. Owner ruling; owner has the domain knowledge here.
 *What remains open, separately:* QA2-vs-production **parity**, which is a technical accuracy question, not a licensing one. Every method signature, parameter name, and result container in `docs/H1_CONTRACT.md` rests on QA2 pages. It stays on the ToS errand list.
 *Affects:* `reference/README.md`, `ROADMAP.md`
+
+**D-013 | 2026-08-05 | The engine is owner-built. Ownership settled.**
+The prelim analysis pipeline in TD Hub was built by the owner. It is TitleSense's to license and white-label. This closes what had been the highest open errand and unblocks all of Track A.
+*Affects:* `ROADMAP.md`, `reference/titlesense-core/`
+
+**D-014 | 2026-08-05 | The engine is named TitleSense Core. The client assistant name is a brand instance and appears nowhere in our writing.**
+The name given to Pacific Coast Title's deployment is one client's assistant, not the product. The product is **TitleSense Core** — the licensed engine. The client brand name is eradicated from all prose we author: ROADMAP, skills, contract, plans, commit messages.
+*The one exception, deliberate:* `reference/titlesense-core/ENGINE_CAPTURE.md` retains it, because ~50 occurrences are literal code identifiers (`src/lib/tessa/`, `TESSA_AUTO_ANALYSIS_ENABLED`, `tessa_prelim_enabled`, `TessaPrelimResultsModal.tsx`, `operation = 'tessa_extract'`). Scrubbing them would break the capture's correspondence with the code and destroy its only value. The capture's header carries the translation instead. Renaming the code namespace is a TD Hub task, not a documentation task.
+*Consequence:* brand tokens, assistant name, and company name are currently hardcoded in the engine. Until they are configuration, the engine can serve only one client — see ROADMAP Track A-H, Stage 1.
+*Affects:* everything
+
+**D-015 | 2026-08-05 | Hardening is sequenced, and the sequence is the argument.**
+Nineteen known defects — thirteen from the capture's §12, six from review — ordered as Track A-H: triage the dormant half first (because unreachable code makes every subsequent review answerable wrongly), then exposure, then truth integrity, then tests, then cosmetics. Not reordered for convenience. Explicitly **not** on the list: rebuilding the pipeline. It works, it has four months in production, and its central design decision — the model is never the sole source of truth — is the asset.
+*Affects:* `ROADMAP.md` Track A-H
+
+**D-016 | 2026-08-05 | Adversarial self-review is a standing mechanism, not a mood.**
+`.claude/skills/self-review/` defines four passes — exposure, truth, structure, and the uncomfortable questions — with assigned severities and required evidence. A review that concludes "looks good" has failed. Nothing ships with an open Exposure or Truth finding. Reviewer findings that need a ruling go to the owner as proposals and are never self-resolved or logged as rulings.
+*Affects:* every milestone
+
+**D-017 | 2026-08-05 | Amends D-014. The naming exception is code identifiers, not one file.**
+D-014 stated the client brand name is eradicated from all authored prose, with `reference/titlesense-core/ENGINE_CAPTURE.md` as the sole exception. That was too narrow and failed its own first verification: `ROADMAP.md` legitimately names `TessaAgentToggle`, `TessaCheatSheet`, `TessaContext`, `TessaChatWidget`, and `tessa-card-body-enter` — real files and symbols in TD Hub, several of which Stage 0 exists to promote or delete. Renaming them in our documents would make the instructions point at files that do not exist.
+
+**The rule, corrected:** the client brand name may appear anywhere as a **literal code identifier** — a file, symbol, env var, DB column, or CSS class that exists in the codebase — and must appear in a code span or fenced block when it does. It may never appear as **prose**: not as the name of the product, the engine, the feature, or the company's offering. The distinction is identifier vs. prose, not file vs. file.
+
+**Verification command** (replaces the earlier raw grep, which could not tell the two apart):
+`sed 's/\`[^\`]*\`//g' FILE | grep -in tessa` — strips code spans first; any remaining hit is a real violation.
+
+*Note:* D-014's substance stands; only its exception clause is corrected. When the TD Hub namespace rename happens, these identifiers change at the source and the documents follow.
+*Affects:* `ROADMAP.md`, `.claude/skills/`, `CLAUDE.md`
