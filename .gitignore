@@ -1,0 +1,51 @@
+# ---------------------------------------------------------------------------
+# Credentials. This project already lost TitlePoint keys to git history once;
+# rotation (ROADMAP owner errand) fixes the keys, not the habit.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*
+secrets*
+config.local.*
+**/appsettings.Development.json
+
+# ---------------------------------------------------------------------------
+# Customer documents. Prelims contain names, addresses, APNs, loan amounts,
+# and order numbers — PII belonging to PCT's customers, not to us.
+# Redaction is a judgment call made per document; the default is "never commit."
+# Working copies live outside the repo entirely.
+# ---------------------------------------------------------------------------
+prelims/
+samples/
+*.pdf
+!docs/**/*.pdf
+fixtures/real/
+**/live_capture/
+
+# ---------------------------------------------------------------------------
+# TitlePoint responses. A captured production result is licensed data whose
+# terms are still under review (ROADMAP owner errand / D-005). Until that
+# answer arrives, captured results stay off the remote.
+# ---------------------------------------------------------------------------
+captures/
+*.response.xml
+
+# ---------------------------------------------------------------------------
+# Ordinary noise
+# ---------------------------------------------------------------------------
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+build/
+.DS_Store
+.idea/
+.vscode/
+*.log
