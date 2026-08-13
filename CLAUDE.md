@@ -117,14 +117,17 @@ a changelog entry.
 
 ---
 
-## Currently blocked
+## Status is not kept here
 
-Two owner errands gate all v2 work: rotating TitlePoint credentials, and asking
-TitlePoint whether derived results may be displayed to non-title-professional
-end users. Nothing in `docs/H1_CONTRACT.md` §9 can be resolved until both clear.
+This file holds **law** — rules that hold regardless of what week it is. It does not
+hold status, and nothing that changes should ever be restated in it.
 
-**Track A (the v1 prelim product) is blocked by none of it.** If asked what to
-work on, that's the answer.
+What is blocked, what is next, what the owner still owes, and which codebase holds what
+all live in **`ROADMAP.md`**. Read it at the start of a session and answer "what should
+I work on" from there, never from memory of this file. When they disagree, `ROADMAP.md`
+is right.
+
+This section exists because the previous version of it went stale within a day.
 
 ---
 

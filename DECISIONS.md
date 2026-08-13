@@ -108,3 +108,9 @@ Resolves the proposal raised in D-019. TitleSense Core is extracted from the cli
 *Why phased rather than a clean rewrite:* the engine has four months of contact with real prelims from a real title company, and there is no test suite. The pre-parser's classification table and the repair rules are the residue of documents that broke the system and got fixed — tacit knowledge that cannot be re-derived by reasoning, only by re-encountering the same documents. A rewrite without parity replaces something hardened by reality with something hardened by nothing, and provides no way to detect what was lost.
 *Dependency:* Phase 2's regression data is PCT's, with unredacted PII. It requires their sign-off and a redaction pass.
 *Affects:* `ROADMAP.md` Stage 1 item 0
+
+**D-021 | 2026-08-06 | One law file. Agent doorways point at it; they never copy it. And law is separated from status.**
+`AGENTS.md` had been created as a full copy of `CLAUDE.md` retitled for another agent. Within hours it was already stale — it predated D-019 and D-020, still implied the client's portal was ours, and its verification command had been corrupted in transit. Two agents reading two rulebooks pick different rules, and nobody can tell which.
+**Rule:** `CLAUDE.md` is the single law file. Other agent entry points (`AGENTS.md`, `.cursor/rules/`, and any future convention) are **pointers** to it. They may repeat a short list of permanent prohibitions as a safety net for an agent that ignores the pointer — never the full ruleset, and only rules chosen for never needing to change.
+**Second rule, and the more important one:** `CLAUDE.md` holds law; `ROADMAP.md` holds status. The stale section was stale because a law file was carrying weekly-changing content — the blocked list, what to work on next. Status is never restated in a law file. Where the two disagree, `ROADMAP.md` wins.
+*Affects:* `CLAUDE.md`, `AGENTS.md`
