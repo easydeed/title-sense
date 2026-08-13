@@ -114,3 +114,11 @@ Resolves the proposal raised in D-019. TitleSense Core is extracted from the cli
 **Rule:** `CLAUDE.md` is the single law file. Other agent entry points (`AGENTS.md`, `.cursor/rules/`, and any future convention) are **pointers** to it. They may repeat a short list of permanent prohibitions as a safety net for an agent that ignores the pointer — never the full ruleset, and only rules chosen for never needing to change.
 **Second rule, and the more important one:** `CLAUDE.md` holds law; `ROADMAP.md` holds status. The stale section was stale because a law file was carrying weekly-changing content — the blocked list, what to work on next. Status is never restated in a law file. Where the two disagree, `ROADMAP.md` wins.
 *Affects:* `CLAUDE.md`, `AGENTS.md`
+
+
+**D-022 | 2026-08-06 | Brand system: ink ground, amber = verified fact, violet = interpretation. Marketing site deployed private.**
+The palette is semantic rather than decorative. Amber and violet already carry meaning in H1 §2 — candidate facts and proposals — and the engine already separates them in the database via `facts_json` and `extraction_json`. A brand whose colors encode what the product believes is defensible in a way an arbitrary choice is not, and it gives every future surface one visual grammar. Ink `#0E1218`, vellum `#EFEDE6` for document surfaces, amber `#E8A33D`, violet `#8B6BF5`. Type: Archivo display, Newsreader body, IBM Plex Mono for recorded-document data.
+*Explicitly not the client's colors.* `#F26B2B` and `#1B2A4A` belong to the deployed client instance. TitleSense licenses to that company's competitors; a marketing site wearing one customer's palette tells every other title company whose product it really is.
+*Content rules, held:* no invented statistics, no customer logos, no testimonials, no stock photography, no pricing. The site's strongest trust signal is the section listing what the system refuses to say.
+*Deployment:* single static `index.html`, no build step, Vercel, deployment protection enabled and verified. Private repo. No custom domain until the engine clears hardening Stages 1 and 2.
+*Affects:* `ROADMAP.md` Track M

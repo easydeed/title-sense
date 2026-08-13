@@ -1,6 +1,6 @@
 # Roadmap
 
-**Last updated:** 2026-08-06 (extraction ruled)
+**Last updated:** 2026-08-06 (extraction ruled; marketing site deployed, private)
 
 The only file here that changes weekly. Everything else changes when a decision changes it.
 
@@ -15,7 +15,7 @@ a title company; a title company is our first customer.
 | Codebase | Owned by | Holds |
 |---|---|---|
 | **this repo** | TitleSense | Documents, decisions, contract, captures. No application code. Ever. |
-| **titlesense-web** | TitleSense | Marketing site. Private, deployment-protected, no custom domain until the engine clears Stage 2. |
+| **titlesense-web** | TitleSense | Marketing site — **deployed, private, auth-protected.** Single static `index.html`, no build step. No custom domain until the engine clears Stage 2. |
 | **TD Hub** | **Pacific Coast Title — the client** | PCT's client portal. TitleSense Core currently runs *inside it*: `src/lib/tessa/`, `prelim_analyses`, the SoftPro webhook, the cron. |
 
 **TitleSense does not currently own a codebase that runs the engine.** The engine we
@@ -244,6 +244,25 @@ keeping. Hardening is not rewriting.
 - [ ] TitlePoint pipeline: `CreateService3/4` → `GetRequestSummaries` → `GetFilteredResultByID`
 - [ ] Interpretation layer: classification, loan families, release matching, confidence tiers
 - [ ] Property X-Ray (officer-facing) and Property Story (client-facing)
+
+---
+
+## Track M — marketing site
+
+- [x] Brand system settled: ink ground, amber = verified fact, violet = interpretation.
+      Semantic, not decorative — the palette encodes the doctrine (D-022).
+- [x] Single-page site built, deployed to Vercel, deployment protection on, verified
+      locked in a private window.
+- [ ] Read it on a phone. The hero stacks below 900px; that layout is untested on a real
+      device.
+- [ ] Decide the CTA properly. `mailto:` is the right placeholder while building quietly;
+      a form implies a product ready for inbound.
+- [ ] Owner judgment: is the headline right for a title company executive? *"Your agents
+      can't read a prelim. They call you instead."* — blunt on purpose, but the audience
+      call is Jerry's.
+- [ ] Copy pass against the engine, using `self-review` Pass 2: does any line claim
+      something TitleSense Core does not actually do?
+- [ ] **Not yet:** custom domain, public launch, naming the client, any statistic.
 
 ---
 
