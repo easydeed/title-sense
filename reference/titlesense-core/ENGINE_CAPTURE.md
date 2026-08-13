@@ -1,9 +1,16 @@
 > # TitleSense Core — engine capture
 >
 > **This document is not edited. Not one word of the body below.** It is a faithful
-> capture of the engine as it exists in the TD Hub codebase, and its value depends
+> capture of the engine as it currently exists inside **TD Hub**, and its value depends
 > entirely on continuing to match that code. Everything the reader needs in order to
 > translate is in this header.
+>
+> **Read this before anything else. TD Hub is not ours.** TD Hub is a client portal
+> **owned by Pacific Coast Title**, TitleSense's first client. The engine was ported
+> into it in April 2026 and runs there today. TitleSense is the founder and owner of
+> the engine (D-013); PCT owns the portal the engine currently sits in. Those are two
+> different things and this document describes the second one. Every path, table, and
+> component named below is a path inside a client's system.
 >
 > **Naming.** The engine is **TitleSense Core** — the licensed product, owner-built,
 > TitleSense's to license. **TESSA™ is the brand instance deployed for Pacific Coast

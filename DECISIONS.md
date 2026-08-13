@@ -86,3 +86,25 @@ D-014 stated the client brand name is eradicated from all authored prose, with `
 
 *Note:* D-014's substance stands; only its exception clause is corrected. When the TD Hub namespace rename happens, these identifiers change at the source and the documents follow.
 *Affects:* `ROADMAP.md`, `.claude/skills/`, `CLAUDE.md`
+
+
+**D-018 | 2026-08-06 | The marketing site is a separate repository. This repo never holds application code.**
+`titlesense-web` holds the v0-generated marketing site. It is not merged into this repo, for two reasons. First, this is a documents repo — five authored documents, an append-only ledger, a ratified contract, and `CLAUDE.md` as law — and a Next.js application would bury that signal under hundreds of files. Second, and less obvious: v0's GitHub sync means an AI tool holds write access to whatever repo it is attached to. In a marketing repo that is harmless. Attached here, it would be write access to `DECISIONS.md` and `docs/H1_CONTRACT.md`. There is no benefit to accepting that.
+*Consequence:* three repos now exist — this one (documents), TD Hub (the engine), `titlesense-web` (marketing). `ROADMAP.md` carries the index, and any fourth repo is added there the day it is created.
+*Operational rules for `titlesense-web`:* private; Vercel Deployment Protection enabled before the first deploy finishes, because Vercel deploys every push by default and preview URLs are live on the public internet; v0 works on its own branch and lands changes by pull request, never pushing straight to `main`; no custom domain until the engine clears hardening Stages 1 and 2.
+*Affects:* `ROADMAP.md`
+
+
+**D-019 | 2026-08-06 | Corrects the record: TD Hub is the client's portal, not ours. TitleSense is the founder and owner.**
+Earlier documents described TD Hub loosely as "the codebase," which read as though it were TitleSense's. It is not. **TD Hub is a client portal owned by Pacific Coast Title**, TitleSense's first client. TitleSense built and owns the engine (D-013); PCT owns the portal the engine currently runs inside. Corrected in `ROADMAP.md`, `reference/titlesense-core/ENGINE_CAPTURE.md`, and `.claude/skills/titlesense-core/SKILL.md`.
+*Direction of the relationship, stated once so it is never inverted again:* TitleSense is the founder of this product; a title company is our first customer. We are not a feature of a client's portal.
+*The consequence this exposes, raised as a proposal and awaiting an owner ruling:* TitleSense does not currently own a codebase that runs its own engine. A second client has nowhere to deploy, nineteen hardening changes are queued against a repo we do not own, and four months of improvements are accruing inside a client's system. Proposed remedy is extraction into a TitleSense-owned codebase with TD Hub as a consumer — the same producer/consumer shape H1 already defines for DeedPro. Logged as ROADMAP Track A-H, Stage 1, item 0.
+*Affects:* `ROADMAP.md`, `reference/titlesense-core/ENGINE_CAPTURE.md`, `.claude/skills/titlesense-core/SKILL.md`, `CLAUDE.md`
+
+
+**D-020 | 2026-08-06 | Extraction ruled. The engine comes into a TitleSense-owned codebase, in three phases.**
+Resolves the proposal raised in D-019. TitleSense Core is extracted from the client's portal into `titlesense-core`, a codebase TitleSense owns, and the portal becomes a consumer of it — the producer/consumer shape H1 already defines for DeedPro, applied a second time.
+**Phase 1: move verbatim** — byte-for-byte, improve nothing. **Phase 2: prove parity** — the extracted engine must produce the same output as the deployed one on every real prelim available, with each difference explained individually. **Phase 3: rebuild**, boundaries first (multi-tenancy, persistence, API surface, deduplicated scoring, schema validation), domain logic last (pre-parser regexes, classification table, repair rules, prompts, scoring values).
+*Why phased rather than a clean rewrite:* the engine has four months of contact with real prelims from a real title company, and there is no test suite. The pre-parser's classification table and the repair rules are the residue of documents that broke the system and got fixed — tacit knowledge that cannot be re-derived by reasoning, only by re-encountering the same documents. A rewrite without parity replaces something hardened by reality with something hardened by nothing, and provides no way to detect what was lost.
+*Dependency:* Phase 2's regression data is PCT's, with unredacted PII. It requires their sign-off and a redaction pass.
+*Affects:* `ROADMAP.md` Stage 1 item 0

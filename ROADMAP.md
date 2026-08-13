@@ -1,8 +1,28 @@
 # Roadmap
 
-**Last updated:** 2026-08-05
+**Last updated:** 2026-08-06 (extraction ruled)
 
 The only file here that changes weekly. Everything else changes when a decision changes it.
+
+---
+
+## Where the code lives
+
+**TitleSense is the founder and owner of this product.** Pacific Coast Title is its
+first client. Keep that direction straight in every document — we are not a feature of
+a title company; a title company is our first customer.
+
+| Codebase | Owned by | Holds |
+|---|---|---|
+| **this repo** | TitleSense | Documents, decisions, contract, captures. No application code. Ever. |
+| **titlesense-web** | TitleSense | Marketing site. Private, deployment-protected, no custom domain until the engine clears Stage 2. |
+| **TD Hub** | **Pacific Coast Title — the client** | PCT's client portal. TitleSense Core currently runs *inside it*: `src/lib/tessa/`, `prelim_analyses`, the SoftPro webhook, the cron. |
+
+**TitleSense does not currently own a codebase that runs the engine.** The engine we
+built and license lives inside our first client's portal. That is the central
+architectural fact of the project right now — see Stage 1 item 0.
+
+If a fourth codebase appears, it gets a row here the same day.
 
 ---
 
@@ -93,6 +113,73 @@ prelim summary must contain, and that knowledge should outlive the code. Then de
 the code.
 
 ### Stage 1 — Exposure (gates licensing; nothing ships past this)
+
+0. **Extraction — RULED. Bring the engine into a TitleSense-owned codebase.**
+   *Three phases. The phase boundary is the discipline; the work inside each is
+   negotiable.*
+
+   **Phase 1 — Move it verbatim.** Extract into `titlesense-core`, unchanged. Same
+   prompts, same regexes, same tables, byte-for-byte. It runs in a codebase we own.
+   Closes D-019. Improve nothing yet.
+
+   **Phase 2 — Prove parity.** The extracted engine must produce **the same output** as
+   the deployed one across every real prelim available. Not similar — same. Every
+   difference gets explained individually; each is either a bug fixed or a bug
+   introduced, and there is no way to tell which without looking.
+   *The regression suite already exists:* `prelim_analyses` holds four months of
+   `facts_json`, `raw_extraction_json`, and `extraction_json`. It is **PCT's data with
+   unredacted PII** — using it requires their sign-off and a redaction pass, which is
+   Stage 1's retention item arriving early and usefully.
+
+   **Phase 3 — Then rebuild.** With parity proven, changes are measurable instead of
+   hopeful.
+
+   | Rebuild freely | Port verbatim, touch last |
+   |---|---|
+   | Multi-tenancy and configuration | The pre-parser regexes and classification table |
+   | Persistence layer and schema | The five repair rules and their add-or-escalate asymmetry |
+   | The API surface the client portal consumes | The four active prompts |
+   | Deduplicated scoring, schema validation | The fifteen scoring rules' point values |
+   | Provenance in UI, retention, cost ceiling | |
+
+   The right column is the moat: four months of contact with real documents, encoded as
+   regexes and thresholds nobody wrote down the reasoning for. It looks the most
+   rewritable — dense, undocumented, unglamorous — which is exactly why it moves last,
+   after tests exist to catch what changes.
+
+   **Talk to PCT first.** Framed as *"the engine becomes a product, and PCT gets it
+   first and cheapest"* this is a good conversation with a design partner. Discovered
+   afterward, it is a very different one.
+
+   TitleSense Core runs inside **TD Hub, which Pacific Coast Title owns**. Every
+   consequence below follows from that one fact:
+
+   - **Client two has nowhere to deploy.** Selling a second title company means either
+     copying code out of PCT's portal — awkward at best, contested at worst — or having
+     already extracted it.
+   - **Hardening is happening in a client's repo.** Stages 1–4 are nineteen changes to
+     a codebase we do not own. Each one needs PCT's cooperation, and each one improves
+     an asset sitting inside their system.
+   - **The improvements accrue in the wrong place.** Four months of work, and the thing
+     of value is embedded in the client's portal rather than in a product we can point
+     an acquirer at.
+   - **It contradicts our own doctrine.** TitleSense and DeedPro are kept structurally
+     separate — separate acquisition stories, a contract as the only coupling point,
+     enforced structurally rather than by convention. The engine and a client's portal
+     deserve exactly the same treatment, and currently get none of it.
+
+   **The proposal:** extract TitleSense Core into a TitleSense-owned codebase, and make
+   TD Hub a *consumer* of it — the same producer/consumer shape H1 already defines for
+   DeedPro. PCT's portal calls the engine; the engine belongs to us; the contract is the
+   seam. One pattern, applied twice.
+
+   **What this is not:** a rewrite. The pipeline works and has four months in
+   production. Extraction is a move, plus an interface.
+
+   **Talk to PCT before doing this, not after.** They have been the design partner and
+   the proving ground. Extraction framed as *"the engine becomes a product PCT gets
+   first and cheapest"* is a very different conversation from PCT discovering it after
+   the fact.
 
 1. **`pdf_text` retention.** Full prelims — owner names, addresses, loan details — stored
    unredacted since April, including on failed rows. Owner decides the rule; the code is

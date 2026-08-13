@@ -6,8 +6,16 @@ description: Answer any question about TitleSense Core, the prelim analysis engi
 # TitleSense Core — the prelim analysis engine
 
 Full reference: `reference/titlesense-core/ENGINE_CAPTURE.md` (~1000 lines).
-**Read-only.** The engine lives in the **TD Hub** codebase, not this repo. That file is
-a capture; it is never edited to describe intent, only re-captured from reality.
+**Read-only.** That file is a capture; it is never edited to describe intent, only
+re-captured from reality.
+
+**The ownership boundary, and it is the most important thing on this page.**
+**TitleSense** owns and built the engine — TitleSense is the founder of this product.
+**TD Hub is a client portal owned by Pacific Coast Title**, TitleSense's first client.
+The engine currently runs *inside* TD Hub. So every file path, database table, and
+component in the capture is a location inside a **client's** system, not ours. Never
+describe TD Hub as our codebase, and never assume a change there is ours to make
+unilaterally.
 
 **Naming, and this is a hard rule.** The engine is **TitleSense Core** — owner-built,
 ours to license. The client-facing assistant name deployed for Pacific Coast Title is a
@@ -106,7 +114,9 @@ explicitly about a backlog flood on the first cycles after unpause.
 2. Respect the add-or-escalate asymmetry in repair.
 3. Anything touching the score must address both copies.
 4. Anything touching `pdf_text` is a PII question first, a code question second.
-5. Changes land in **TD Hub**, not here. This repo holds the capture and the contract.
+5. Changes currently land in **TD Hub — the client's portal**, not here. This repo holds
+   the capture and the contract. Extraction into a TitleSense-owned codebase is an open
+   architectural question; see `ROADMAP.md`.
 6. The engine is multi-tenant-in-waiting: brand tokens (`#F26B2B`, `#1B2A4A`), the
    assistant name, and the company name are currently hardcoded. Anything touching
    those is licensing work, not styling work.

@@ -7,6 +7,14 @@ Project instructions for Claude Code. Read `README.md` for orientation and
 every decision. Where you disagree with a plan, say so plainly and let him rule;
 don't silently diverge.
 
+**Who owns what — get this right before anything else.** TitleSense is the **founder and
+owner** of this product and the engine, TitleSense Core. **TD Hub is a client portal
+owned by Pacific Coast Title**, our first client, and the engine currently runs inside
+it. So every path in `reference/titlesense-core/ENGINE_CAPTURE.md` is a location in a
+*client's* system. Never describe TD Hub as ours, never assume a change there is ours to
+make unilaterally, and never phrase TitleSense as a feature of a title company's
+platform. (D-013, D-019)
+
 **What this is:** TitleSense makes property records readable for the people in a
 transaction who aren't title professionals. v1 is the prelim product (prelim in,
 plain-English summary out, Pacific Coast Title as first customer). v2 is the
