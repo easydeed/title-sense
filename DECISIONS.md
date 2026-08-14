@@ -122,3 +122,13 @@ The palette is semantic rather than decorative. Amber and violet already carry m
 *Content rules, held:* no invented statistics, no customer logos, no testimonials, no stock photography, no pricing. The site's strongest trust signal is the section listing what the system refuses to say.
 *Deployment:* single static `index.html`, no build step, Vercel, deployment protection enabled and verified. Private repo. No custom domain until the engine clears hardening Stages 1 and 2.
 *Affects:* `ROADMAP.md` Track M
+
+
+**D-023 | 2026-08-14 | Phase 1 complete. The engine is out of the client's portal.**
+Forty-five exported files triaged into three buckets. Engine code moved to `titlesense-core` and renamed off the client's brand namespace; nineteen client-coupled files — their migrations, order routes, settings and admin routes, health route, ops panel, brand-carrying components — quarantined in `_client_coupled/` as reference, to be **replaced in Phase 3 rather than ported**.
+**Three seams defined,** because the export could not run: `pipeline.ts` imported the client's database and S3 modules, and `ai-client.ts` imported their database for vendor logging. The engine now receives `DocumentSource`, `AnalysisStore`, and `VendorLogSink` instead of importing them. Control flow, logging, and error handling unchanged.
+**Tenant identity parameterized.** The persona string hardcoded the client's company and assistant name. It is now a `TenantIdentity` value whose default reproduces the deployed prompt byte-for-byte — verified, 2509 characters, empty diff. Editing the prompt directly would have changed model output and destroyed the parity baseline before it could be measured.
+**Live data contracts deliberately untouched:** the settings key `tessa_prelim_enabled`, the log values `'tessa_extract'` and `'tessa_summarize'`, the `prelim_analyses` table and columns, and the class name `TessaAnalysisPausedError` (caught by name at runtime). These change by migration in Phase 3, never by find-and-replace. Each carries a comment saying so.
+*Standing item, so it cannot survive quietly:* **the default `TenantIdentity` still names the client.** That is correct today — it is the parity anchor. **Replacing it with a neutral default is a Phase 2 exit criterion**, not optional cleanup.
+*Also open:* the engine has no `package.json`. Dependency versions must be copied from the client repo rather than resolved fresh; `pdf-parse` is pinned by parity, and the deep import `pdf-parse/lib/pdf-parse` is deliberate — the package index carries a debug harness that reads a local file.
+*Affects:* `ROADMAP.md` Stage 1 item 0

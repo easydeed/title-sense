@@ -1,6 +1,6 @@
 # Roadmap
 
-**Last updated:** 2026-08-06 (extraction ruled; marketing site deployed, private)
+**Last updated:** 2026-08-14 (Phase 1 complete)
 
 The only file here that changes weekly. Everything else changes when a decision changes it.
 
@@ -16,11 +16,13 @@ a title company; a title company is our first customer.
 |---|---|---|
 | **this repo** | TitleSense | Documents, decisions, contract, captures. No application code. Ever. |
 | **titlesense-web** | TitleSense | Marketing site — **deployed, private, auth-protected.** Single static `index.html`, no build step. No custom domain until the engine clears Stage 2. |
-| **TD Hub** | **Pacific Coast Title — the client** | PCT's client portal. TitleSense Core currently runs *inside it*: `src/lib/tessa/`, `prelim_analyses`, the SoftPro webhook, the cron. |
+| **titlesense-core** | TitleSense | **The engine.** Extracted from the client portal 2026-08-14. Private. |
+| **TD Hub** | **Pacific Coast Title — the client** | PCT's client portal. Still runs the deployed engine, and still owns the `prelim_analyses` database and the S3 bucket. |
 
-**TitleSense does not currently own a codebase that runs the engine.** The engine we
-built and license lives inside our first client's portal. That is the central
-architectural fact of the project right now — see Stage 1 item 0.
+**The engine now lives in a codebase we own.** What remains welded is the *data*: the
+`prelim_analyses` table and the S3 bucket are the client's, and the engine reaches them
+through three seams rather than owning them. That is Phase 3's problem, and it belongs
+in the PCT conversation.
 
 If a fourth codebase appears, it gets a row here the same day.
 
@@ -118,9 +120,18 @@ the code.
    *Three phases. The phase boundary is the discipline; the work inside each is
    negotiable.*
 
-   **Phase 1 — Move it verbatim.** Extract into `titlesense-core`, unchanged. Same
-   prompts, same regexes, same tables, byte-for-byte. It runs in a codebase we own.
-   Closes D-019. Improve nothing yet.
+   **Phase 1 — Move it verbatim. COMPLETE 2026-08-14.** Extracted into `titlesense-core`.
+   Engine files moved and renamed; nineteen client-coupled files quarantined in
+   `_client_coupled/`, to be replaced in Phase 3 rather than ported. Three seams defined
+   so the engine no longer imports the client's modules: `DocumentSource`,
+   `AnalysisStore`, `VendorLogSink`. Tenant identity parameterized out of the prompt with
+   a byte-identical default. Live data contracts left untouched. See D-023.
+
+   **Phase 2 — Prove parity. NEXT, and blocked.** Needs three things before it can start:
+   exact dependency versions from the client repo (`pdf-parse` above all — a different
+   version extracts different text and would break parity invisibly), real prelims, and
+   the historical `prelim_analyses` rows. The last two are the client's data and need
+   permission plus a redaction pass.
 
    **Phase 2 — Prove parity.** The extracted engine must produce **the same output** as
    the deployed one across every real prelim available. Not similar — same. Every
