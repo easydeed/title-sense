@@ -148,3 +148,13 @@ An agent session moved the entire `reference/` tree to `docs/reference/` without
 **Consequence for the client, worth raising alongside the PII finding:** their production application can change behavior on redeploy with no code change, because dependency resolution is unpinned. Same posture as the retention finding — something we found, with a fix.
 *Also:* the lockfile `titlesense-core` generates is committed. It is the first reproducible record of what this engine runs against.
 *Affects:* `ROADMAP.md` Phase 2
+
+
+**D-026 | 2026-08-14 | Silent truncation at 50,000 characters. Ranked the top truth defect; parity is measured on truncated input.**
+`pdf-extract.ts` caps text extraction at `MAX_CHARS = 50_000`. Production data shows the cap is not an edge case: **3,435 of 3,468 stored rows are exactly at the ceiling.** Roughly 99% of prelims analyzed since April were read only in part, and because prelims place exceptions, legal descriptions, and tax detail late in the document, the unread portion is disproportionately the substantive one.
+**Why it ranks above every other Stage 2 item:** it is silent. No truncation marker in `extraction_json`, none in the UI, and a summary that presents itself as a summary of the document. Under the standing rule that absence is stated and never implied, the engine is making claims about a document it did not finish reading without disclosing that it stopped.
+**Fix is split in two, deliberately.** Marking truncation — `truncated: true` plus the original character count, surfaced to the officer — is small and safe and happens now. Raising or removing the cap changes what the model sees, therefore changes output, and therefore happens only after a parity baseline exists.
+**Consequence for Phase 2, and it simplifies things:** the deployed engine's input was `pdf_text` *as stored* — already truncated. So parity is measured as stored input → extracted engine → compare against stored `facts_json` and `extraction_json`. **The source PDFs are not needed.** The parity corpus is a table export, not 3.1 GB of client documents, which makes the data ask smaller and easier to grant.
+*Sampling ruling:* a stratified 80–100 rows weighted toward `high` and `very_high` complexity, plus every foreclosure case (those exercise the most repair rules), gives better behavioral coverage than 500 random rows. The population is heavily skewed — 61% moderate, 3.3% very_high — so a random draw would surface almost none of the interesting cases.
+*Standing constraint:* real prelims and stored rows are the client's data containing owner names, addresses, APNs, and lien details. Nothing moves until access is agreed, and the export is redacted at source.
+*Affects:* `ROADMAP.md` Stage 2, Phase 2

@@ -204,6 +204,27 @@ the code.
 
 ### Stage 2 — Truth integrity (doctrine violations)
 
+3a. **Silent truncation — the most consequential defect found so far.** `pdf-extract.ts`
+   caps extraction at `MAX_CHARS = 50_000`. In production, **3,435 of 3,468 stored rows
+   sit exactly at that ceiling** — roughly 99% of every prelim ever analyzed was cut off
+   mid-document. Prelims put exceptions, legal descriptions, and tax detail *late*, so
+   the omitted portion is disproportionately the part that matters.
+
+   Nothing records that this happened. `extraction_json` carries no truncation marker,
+   the UI shows none, and the summary reads as a summary of the document rather than of
+   its first 50,000 characters. That is a direct violation of the rule that **absence is
+   stated, never implied** — the engine makes claims about a document it did not finish
+   reading, and does not say so.
+
+   - **Minimum fix, small:** record `truncated: true` plus the original character count
+     in the output and surface it. An officer must be told the back of the file was not
+     read.
+   - **Real fix, needs parity work:** raise or remove the cap. Changes model input, so it
+     changes output, so it happens *after* a parity baseline exists — not before.
+
+   Ranked above the duplicated complexity score because it is silent and it fires on
+   almost every document.
+
 4. **One scoring implementation.** The gauge has its own byte-for-byte copy and never
    receives `facts`, so the displayed score can sit up to 10 points below the stored one
    and cross a band boundary. Under H1's lineage law a displayed conclusion that
