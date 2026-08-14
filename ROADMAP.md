@@ -1,6 +1,6 @@
 # Roadmap
 
-**Last updated:** 2026-08-14 (Phase 1 complete)
+**Last updated:** 2026-08-14 (Phase 1 complete; Phase 2 harness built, blocked on data)
 
 The only file here that changes weekly. Everything else changes when a decision changes it.
 
@@ -127,11 +127,10 @@ the code.
    `AnalysisStore`, `VendorLogSink`. Tenant identity parameterized out of the prompt with
    a byte-identical default. Live data contracts left untouched. See D-023.
 
-   **Phase 2 — Prove parity. NEXT, and blocked.** Needs three things before it can start:
-   exact dependency versions from the client repo (`pdf-parse` above all — a different
-   version extracts different text and would break parity invisibly), real prelims, and
-   the historical `prelim_analyses` rows. The last two are the client's data and need
-   permission plus a redaction pass.
+   **Phase 2 — Prove parity. HARNESS BUILT 2026-08-14; blocked only on data.**
+   Dependency versions resolved (D-025). Source PDFs are not needed (D-026). The one
+   remaining input is a small export of `prelim_analyses` rows: stratified across
+   complexity levels, every foreclosure case included, 80–100 total. See D-027.
 
    **Phase 2 — Prove parity.** The extracted engine must produce **the same output** as
    the deployed one across every real prelim available. Not similar — same. Every
