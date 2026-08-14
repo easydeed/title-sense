@@ -140,3 +140,11 @@ An agent session moved the entire `reference/` tree to `docs/reference/` without
 **Rule:** before any `git add -A`, run `git status --porcelain` and read the deletions. A `D ` line for a file nobody was asked to remove is a stop, not a formality. Agents are not trusted to stage unsupervised.
 *Second finding, confirming D-021 empirically:* `.agents/` held copies of the skills. Two were byte-identical; **`titlesense-core` had already drifted.** Duplicated instruction files diverge in days, not months. Deleted. One law file; doorways point, never copy.
 *Affects:* `CLAUDE.md`
+
+**D-025 | 2026-08-14 | Engine dependencies pinned exactly. The client portal has no lockfile — parity is measured against stored rows, not against re-running the deployed engine.**
+`titlesense-core` pins every dependency to an exact version, no caret ranges: `@anthropic-ai/sdk` 0.82.0, `pdf-parse` 1.1.1, `drizzle-orm` 0.45.2, with `react` 19.2.3 and `lucide-react` 1.18.0 as optional peers (UI only — the host application provides them). Values taken from what is **installed** in the client portal, not from its `package.json` ranges.
+**The finding that forced this:** the client portal has no root lockfile. Its caret ranges had already floated — `drizzle-orm` from ^0.45.1 to 0.45.2, `lucide-react` from ^1.7.0 all the way to 1.18.0. Nobody chose those versions. `pdf-parse`, the one that governs text extraction and therefore what the model sees, was correctly pinned exact.
+**Consequence for Phase 2, and it is structural:** the environment that produced four months of analyses cannot be reconstructed, so parity cannot be defined as "re-run the deployed engine and diff." The baseline must be the **stored `prelim_analyses` rows** — `facts_json` and `extraction_json` as recorded. This was already the intended approach; it is now the only available one.
+**Consequence for the client, worth raising alongside the PII finding:** their production application can change behavior on redeploy with no code change, because dependency resolution is unpinned. Same posture as the retention finding — something we found, with a fix.
+*Also:* the lockfile `titlesense-core` generates is committed. It is the first reproducible record of what this engine runs against.
+*Affects:* `ROADMAP.md` Phase 2
