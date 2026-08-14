@@ -36,6 +36,12 @@ captures/
 *.response.xml
 
 # ---------------------------------------------------------------------------
+# Delivery artifacts. Update packages arrive as zips; their contents get
+# applied and committed. The zip itself is never the thing to keep.
+# ---------------------------------------------------------------------------
+*.zip
+
+# ---------------------------------------------------------------------------
 # Ordinary noise
 # ---------------------------------------------------------------------------
 node_modules/
