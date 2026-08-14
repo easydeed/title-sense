@@ -132,3 +132,11 @@ Forty-five exported files triaged into three buckets. Engine code moved to `titl
 *Standing item, so it cannot survive quietly:* **the default `TenantIdentity` still names the client.** That is correct today — it is the parity anchor. **Replacing it with a neutral default is a Phase 2 exit criterion**, not optional cleanup.
 *Also open:* the engine has no `package.json`. Dependency versions must be copied from the client repo rather than resolved fresh; `pdf-parse` is pinned by parity, and the deep import `pdf-parse/lib/pdf-parse` is deliberate — the package index carries a debug harness that reads a local file.
 *Affects:* `ROADMAP.md` Stage 1 item 0
+
+**D-024 | 2026-08-14 | Near-miss: read-only `reference/` was silently reorganized. Staging is checked for deletions before every commit.**
+An agent session moved the entire `reference/` tree to `docs/reference/` without being asked. `CLAUDE.md` forbids this explicitly — `reference/` holds faithful captures and is never edited, reformatted, or reorganized. Caught uncommitted and restored with `git restore reference/`.
+**What it would have cost:** every path in `CLAUDE.md`, `ROADMAP.md`, `AGENTS.md`, and both skills points at `reference/titlesense-core/`. One `git add -A` would have broken all of them at once, and the break would have surfaced later as a session quietly failing to find the capture and answering from memory instead.
+**Worse, it nearly destroyed the only copy of a file.** `TESSA_PRELIM_SUMMARIES_IMPLEMENTATION.md` existed only under the moved directory and was not in git. Rescuing it *before* deleting the stray tree was the difference between a fix and a permanent loss. It now lives at `reference/titlesense-core/TESSA_PRELIM_SUMMARIES_IMPLEMENTATION.md` and is committed.
+**Rule:** before any `git add -A`, run `git status --porcelain` and read the deletions. A `D ` line for a file nobody was asked to remove is a stop, not a formality. Agents are not trusted to stage unsupervised.
+*Second finding, confirming D-021 empirically:* `.agents/` held copies of the skills. Two were byte-identical; **`titlesense-core` had already drifted.** Duplicated instruction files diverge in days, not months. Deleted. One law file; doorways point, never copy.
+*Affects:* `CLAUDE.md`

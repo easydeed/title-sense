@@ -103,6 +103,21 @@ a changelog entry.
 
 ---
 
+## Before staging
+
+**Never run `git add -A` without reading `git status --porcelain` first**, and read the
+deletions specifically. A `D ` line for a file nobody asked to remove is a stop.
+
+This is not a formality. A session once moved the whole read-only `reference/` tree
+without being asked; a single unchecked `git add -A` would have broken every documented
+path at once, and the failure would have surfaced weeks later as a session unable to find
+the capture and answering from memory instead. It also came within one command of
+destroying the only copy of a file that was not yet in git. (D-024)
+
+Never reorganize, rename, or relocate directories in this repo. Paths are referenced by
+name in `CLAUDE.md`, `ROADMAP.md`, `AGENTS.md`, and the skills. If a structure seems
+wrong, say so and let the owner rule.
+
 ## Never commit
 
 - Credentials of any kind. This project already lost TitlePoint keys to git
